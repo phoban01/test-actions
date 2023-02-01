@@ -15,6 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Replace version string
-      TAG=${{ github.event.client_payload.tag }}
       run: |
+        TAG=${{ github.event.client_payload.tag }}
         sed -i "s/latest_version = .*/latest_version = \"$TAG\"/" ./params.toml
