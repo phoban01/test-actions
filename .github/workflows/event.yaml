@@ -1,0 +1,20 @@
+name: Trigger CLI Update
+
+on:
+  repository_dispatch:
+    types: [ocm-cli-release]
+
+# capture ocm cli release event
+# extract the tag
+# replace the latest_version variable value in config/_default/params.toml
+# create a pull request with the change
+# configure auto-merge?
+#
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Replace version string
+      TAG=${{ github.event.client_payload.tag }}
+      run: |
+        sed -i "s/latest_version = .*/latest_version = \"$TAG\"/" ./params.toml
