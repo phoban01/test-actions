@@ -8,7 +8,15 @@ jobs:
   triggerUpdate:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+    - name: Do nothing
+      if: github.event == ''
+      run: |
+        echo "No dice"
     - name: Replace version string
+      if: github.event != ''
       run: |
         TAG=${{ github.event.client_payload.tag }}
         sed -i "s/latest_version = .*/latest_version = \"$TAG\"/" ./params.toml
